@@ -1,0 +1,297 @@
+# MindX Strategic Navigator Challenge — Implementation Plan
+
+> Purpose: This plan is written for **Cursor AI** to execute step-by-step. It defines scope, assumptions, milestones, file structure, and acceptance criteria for each task.
+
+---
+
+## 0. Global Rules & Assumptions
+
+* All tasks **use the same dataset** without manual alteration.
+* Tasks are **implemented independently**, but may reuse computed outputs.
+* Clarity, correctness, and explainability are prioritized over complexity.
+* All assumptions must be documented in code comments and README.
+
+---
+
+## 1. Repository Structure
+
+```
+MindX-Strategic-Navigator/
+│
+├── data/
+│   └── dataset.csv
+│
+├── TaskA_Compliance_Engine/
+│   ├── exploratory.ipynb
+│   ├── model.py
+│   ├── compliance.py
+│   ├── run_pipeline.py
+│   ├── output/
+│   │   └── compliance_results.json
+│   └── requirements.txt
+│
+├── TaskB_Fleet_Dashboard/
+│   ├── src/
+│   ├── public/
+│   └── README.md
+│
+├── TaskC_Technical_Memo/
+│   └── MindX_Technical_Memo.pdf
+│
+└── README.md
+```
+
+---
+
+## 2. Task A — Compliance Engine (ML & Math)
+
+### 2.1 Objective
+
+Build a Python-based engine that:
+
+* Predicts CO2 emissions
+* Computes GHG intensity
+* Benchmarks vessels against a regulatory target
+* Classifies vessels as **Surplus** or **Deficit**
+
+---
+
+### 2.2 Step A1 — Dataset Understanding
+
+**Actions:**
+
+* Load dataset
+* Inspect schema, units, missing values
+* Identify:
+
+  * Target: `CO2 Emission (Kg)`
+  * Features: Ship Type, Distance, Fuel Consumption
+
+**Deliverable:**
+
+* Clear assumptions documented in `exploratory.ipynb`
+
+---
+
+### 2.3 Step A2 — ML Model
+
+**Model Choice:**
+
+* Start with Linear Regression
+* Encode categorical ship type (OneHotEncoding)
+
+**Pipeline:**
+
+```
+Input Features → Encoder → Model → CO2 Prediction
+```
+
+**Evaluation:**
+
+* Use train/test split
+* Report RMSE or MAE
+
+**Acceptance Criteria:**
+
+* Model runs end-to-end
+* Performance metric logged
+* No hard-coded outputs
+
+---
+
+### 2.4 Step A3 — GHG Intensity Calculation
+
+**Formula (assumption-based):**
+
+```
+GHG Intensity = CO2 Emission (Kg) / Distance
+```
+
+* Compute per vessel
+* Store as numeric column
+
+---
+
+### 2.5 Step A4 — Regulatory Benchmark
+
+**Logic:**
+
+* Compute fleet-wide average GHG intensity
+* Set 2026 target:
+
+```
+Target Intensity = Average Intensity × 0.95
+```
+
+---
+
+### 2.6 Step A5 — Compliance Balance
+
+**Formula:**
+
+```
+Compliance Balance (CB) = Target Intensity − Vessel Intensity
+```
+
+**Classification:**
+
+* CB > 0 → Surplus
+* CB < 0 → Deficit
+
+---
+
+### 2.7 Step A6 — Output Generation
+
+**Output Fields:**
+
+```json
+{
+  "vessel_id": "",
+  "ship_type": "",
+  "distance": 0,
+  "co2_emission": 0,
+  "ghg_intensity": 0,
+  "target_intensity": 0,
+  "compliance_balance": 0,
+  "status": "Surplus | Deficit"
+}
+```
+
+* Save to `output/compliance_results.json`
+
+---
+
+## 3. Task B — Fleet Arbitrage Dashboard
+
+### 3.1 Objective
+
+Create a responsive web dashboard that:
+
+* Visualizes fleet compliance risk
+* Simulates pooling between surplus and deficit vessels
+
+---
+
+### 3.2 Data Source
+
+* Load `compliance_results.json`
+* No backend dependency required
+
+---
+
+### 3.3 UI Sections
+
+1. **Fleet Overview**
+
+   * Total vessels
+   * Surplus count
+   * Deficit count
+
+2. **Liability Map**
+
+   * Table or cards
+   * Color-coded risk (green / yellow / red)
+
+---
+
+### 3.4 Pooling Simulator (Core Logic)
+
+**User Flow:**
+
+* Select one Deficit vessel
+* Select one Surplus vessel
+
+**Calculation:**
+
+```
+Net Balance = CB_surplus + CB_deficit
+```
+
+**Outcome Rules:**
+
+* Net ≥ 0 → Compliance offset achieved
+* Net < 0 → Remaining deficit displayed
+
+**Acceptance Criteria:**
+
+* Deterministic results
+* Instant UI feedback
+
+---
+
+## 4. Task C — Technical Memo (Deep Research)
+
+### 4.1 Objective
+
+Produce a **500-word technical memo (PDF)** identifying and explaining one dataset anomaly.
+
+---
+
+### 4.2 Anomaly Detection
+
+**Methods:**
+
+* Fuel consumption per distance
+* Z-score or percentile analysis
+
+**Select:**
+
+* One clearly abnormal vessel
+
+---
+
+### 4.3 Physical Reasoning (Required)
+
+Explain anomaly using maritime engineering concepts:
+
+* Hull biofouling
+* Adverse weather
+* Engine inefficiency
+* Stability / resistance issues
+* Sensor miscalibration (only if justified)
+
+---
+
+### 4.4 Memo Structure
+
+1. Title
+2. Context
+3. Observed Anomaly (with numbers)
+4. Physical Explanation
+5. Compliance Impact
+6. Recommendation
+
+---
+
+## 5. README & Delivery
+
+### 5.1 Main README Must Include
+
+* Project overview
+* Task summaries
+* Assumptions
+* ML metrics
+* Pooling logic explanation
+
+---
+
+### 5.2 Git Hygiene
+
+* Minimum 10 commits
+* Logical commit messages
+* No single massive commit
+
+---
+
+## 6. Final Acceptance Checklist
+
+* [ ] Task A runs end-to-end
+* [ ] Compliance math correct
+* [ ] Dashboard pooling deterministic
+* [ ] Memo links data to physics
+* [ ] Public GitHub repo
+* [ ] 3-minute walkthrough video
+
+---
+
+## End of Plan
