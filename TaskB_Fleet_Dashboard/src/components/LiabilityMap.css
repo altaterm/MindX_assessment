@@ -1,17 +1,405 @@
 /* Liability Map Container */
 .liability-map {
+  padding: 10px 0;
+}
+
+/* Controls Section */
+.map-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
   padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.control-group label {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.search-input,
+.filter-select,
+.sort-select {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.search-input:focus,
+.filter-select:focus,
+.sort-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-input::placeholder {
+  color: #bbb;
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.stat-value.surplus {
+  color: #a8ffa8;
+}
+
+.stat-value.deficit {
+  color: #ffb3b3;
+}
+
+/* Vessels Grid */
+.vessels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Vessel Card */
+.vessel-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-left: 5px solid;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.vessel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.vessel-card.surplus {
+  border-left-color: #27ae60;
+}
+
+.vessel-card.deficit {
+  border-left-color: #e74c3c;
+}
+
+/* Vessel Header */
+.vessel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.vessel-id {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.surplus {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.deficit {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Vessel Info */
+.vessel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.info-label {
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Vessel Metrics */
+.vessel-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.metric {
   text-align: center;
 }
 
-.placeholder-text {
+.metric-label {
+  font-size: 0.75rem;
   color: #7f8c8d;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
-.info-text {
-  color: #95a5a6;
+.metric-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Compliance Info */
+.compliance-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.compliance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 0.9rem;
+}
+
+.compliance-row.balance {
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-weight: 600;
+}
+
+.compliance-row .label {
+  color: #7f8c8d;
+}
+
+.compliance-row .value {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.compliance-row .value.surplus {
+  color: #27ae60;
+}
+
+.compliance-row .value.deficit {
+  color: #e74c3c;
+}
+
+/* Risk Indicator */
+.risk-indicator {
+  margin-top: 5px;
+}
+
+.risk-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.page-button {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-button:hover:not(:disabled) {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+.page-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.page-info {
+  text-align: center;
+  font-weight: 600;
+  color: #555;
+}
+
+.page-range {
+  display: block;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* No Results */
+.no-results {
+  padding: 60px 20px;
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/* Risk Legend */
+.risk-legend {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.legend-title {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.legend-color {
+  width: 30px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .map-controls {
+    flex-direction: column;
+  }
+
+  .control-group {
+    min-width: 100%;
+  }
+
+  .vessels-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-bar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .vessel-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .legend-items {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .liability-map {
+    padding: 0;
+  }
+
+  .vessel-card {
+    padding: 15px;
+  }
+
+  .vessel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .page-button {
+    width: 100%;
+  }
 }
 
