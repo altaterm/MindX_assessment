@@ -177,7 +177,4 @@ This project is submitted as part of the MindX AI Intern Technical Assessment.
 
 ---
 
-## 📧 Contact
-
-*Your contact information here*
 
