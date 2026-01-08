@@ -1,17 +1,566 @@
 /* Pooling Simulator Container */
 .pooling-simulator {
-  padding: 20px;
-  text-align: center;
+  padding: 10px 0;
 }
 
-.placeholder-text {
-  color: #7f8c8d;
-  font-size: 1.1rem;
+/* Instructions */
+.simulator-instructions {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.simulator-instructions h3 {
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+}
+
+.simulator-instructions p {
+  line-height: 1.6;
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.deficit-text {
+  color: #ffb3b3;
+}
+
+.surplus-text {
+  color: #a8ffa8;
+}
+
+/* Selection Area */
+.selection-area {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.selection-panel {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.deficit-panel {
+  border-top: 4px solid #e74c3c;
+}
+
+.surplus-panel {
+  border-top: 4px solid #27ae60;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  color: #2c3e50;
   margin-bottom: 10px;
 }
 
-.info-text {
-  color: #95a5a6;
+.panel-icon {
+  font-size: 1.5rem;
+}
+
+.vessel-count {
+  color: #7f8c8d;
   font-size: 0.9rem;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* Vessel List */
+.vessel-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.vessel-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vessel-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.vessel-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.vessel-option {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.vessel-option.deficit {
+  background: #fff5f5;
+}
+
+.vessel-option.deficit:hover {
+  background: #ffe0e0;
+  border-color: #e74c3c;
+}
+
+.vessel-option.deficit.selected {
+  background: #ffcccc;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+.vessel-option.surplus {
+  background: #f0fff4;
+}
+
+.vessel-option.surplus:hover {
+  background: #d4f4dd;
+  border-color: #27ae60;
+}
+
+.vessel-option.surplus.selected {
+  background: #b8e6c9;
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+}
+
+.option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.vessel-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.balance-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.balance-badge.deficit {
+  background: #e74c3c;
+  color: white;
+}
+
+.balance-badge.surplus {
+  background: #27ae60;
+  color: white;
+}
+
+.option-details {
+  display: flex;
+  gap: 15px;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.more-vessels {
+  text-align: center;
+  padding: 15px;
+  color: #7f8c8d;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.no-vessels {
+  text-align: center;
+  padding: 40px 20px;
+  color: #bbb;
+  font-style: italic;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.simulate-button,
+.reset-button {
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.simulate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.simulate-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.simulate-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.reset-button {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: #667eea;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.reset-button:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Simulation Result */
+.simulation-result {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.simulation-result.success {
+  border-left: 6px solid #27ae60;
+}
+
+.simulation-result.partial {
+  border-left: 6px solid #f39c12;
+}
+
+.result-header h3 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.result-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Vessels Summary */
+.vessels-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex: 1;
+  min-width: 180px;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card.deficit {
+  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+  color: white;
+}
+
+.summary-card.surplus {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.summary-card.net.success {
+  background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+  color: white;
+}
+
+.summary-card.net.warning {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-vessel-name {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  opacity: 0.95;
+}
+
+.card-balance {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.calculation-symbol {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  display: flex;
+  align-items: center;
+}
+
+/* Calculation Details */
+.calculation-details {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.calculation-details h4 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.calculation-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calc-step {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: white;
+  border-radius: 6px;
+}
+
+.calc-step.total {
+  border-top: 2px solid #667eea;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.calc-label {
+  color: #555;
+}
+
+.calc-value {
+  font-weight: 600;
+}
+
+.calc-value.deficit {
+  color: #e74c3c;
+}
+
+.calc-value.surplus {
+  color: #27ae60;
+}
+
+/* Result Interpretation */
+.result-interpretation {
+  display: flex;
+  gap: 20px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  align-items: flex-start;
+}
+
+.interpretation-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.interpretation-icon.success {
+  color: #27ae60;
+}
+
+.interpretation-icon.warning {
+  color: #f39c12;
+}
+
+.interpretation-text h4 {
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.interpretation-text p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.bonus-info {
+  background: #d4edda;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #27ae60;
+}
+
+.deficit-info {
+  background: #f8d7da;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+}
+
+.highlight-surplus {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+.highlight-deficit {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+/* Business Implications */
+.business-implications {
+  background: #fff9e6;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #f39c12;
+}
+
+.business-implications h4 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.business-implications ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.business-implications li {
+  padding: 8px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .selection-area {
+    grid-template-columns: 1fr;
+  }
+
+  .vessels-summary {
+    flex-direction: column;
+  }
+
+  .calculation-symbol {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .simulator-instructions {
+    padding: 20px;
+  }
+
+  .selection-panel {
+    padding: 15px;
+  }
+
+  .vessel-list {
+    max-height: 300px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .simulate-button,
+  .reset-button {
+    width: 100%;
+  }
+
+  .result-interpretation {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .interpretation-icon {
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .simulator-instructions h3 {
+    font-size: 1.1rem;
+  }
+
+  .simulator-instructions p {
+    font-size: 0.9rem;
+  }
+
+  .panel-title {
+    font-size: 1rem;
+  }
+
+  .vessel-option {
+    padding: 12px;
+  }
+
+  .option-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .simulation-result {
+    padding: 20px;
+  }
+
+  .result-header h3 {
+    font-size: 1.4rem;
+  }
+
+  .summary-card {
+    min-width: 100%;
+  }
 }
 
