@@ -1,0 +1,17 @@
+/* Pooling Simulator Container */
+.pooling-simulator {
+  padding: 20px;
+  text-align: center;
+}
+
+.placeholder-text {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.info-text {
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+
