@@ -1,53 +1,24 @@
 # MindX Strategic Navigator Challenge
 
-> A comprehensive maritime compliance and fleet optimization system developed for the MindX AI Intern Technical Assessment.
+Maritime fleet compliance management system with ML-powered CO2 prediction, interactive dashboard, and technical analysis.
+
+## Project Overview
+
+**Three integrated tasks:**
+1. **Task A:** ML Compliance Engine (Python)
+2. **Task B:** Fleet Dashboard (React)
+3. **Task C:** Technical Memo (PDF)
 
 ---
 
-## 📋 Project Overview
+## Setup Instructions
 
-This project implements a three-part solution for maritime fleet compliance management:
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- npm or yarn
 
-1. **Task A: Compliance Engine** - ML-powered CO2 emissions prediction and GHG compliance analysis
-2. **Task B: Fleet Arbitrage Dashboard** - Interactive React dashboard for fleet compliance visualization and pooling simulation
-3. **Task C: Technical Memo** - Deep analysis of dataset anomalies with maritime engineering insights
-
----
-
-## 🏗️ Repository Structure
-
-```
-MindX_assessment/
-│
-├── data/
-│   └── mindx test dataset.csv        # Source dataset
-│
-├── TaskA_Compliance_Engine/
-│   ├── exploratory.ipynb              # Data exploration and analysis
-│   ├── model.py                       # ML model implementation
-│   ├── compliance.py                  # Compliance calculation logic
-│   ├── run_pipeline.py                # End-to-end pipeline orchestration
-│   ├── output/
-│   │   └── compliance_results.json    # Generated compliance results
-│   └── requirements.txt               # Python dependencies
-│
-├── TaskB_Fleet_Dashboard/
-│   ├── src/                          # React source code
-│   ├── public/                       # Static assets
-│   ├── package.json                  # Node dependencies
-│   └── README.md                     # Dashboard documentation
-│
-├── TaskC_Technical_Memo/
-│   └── MindX_Technical_Memo.pdf      # Technical analysis memo
-│
-└── README.md                         # This file
-```
-
----
-
-## 🚀 Quick Start
-
-### Task A: Compliance Engine
+### Task A: Compliance Engine (Python)
 
 ```bash
 cd TaskA_Compliance_Engine
@@ -55,13 +26,18 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
-### Task B: Fleet Dashboard
+**Output:** `output/compliance_results.json` (1440 vessel records with compliance metrics)
+
+### Task B: Fleet Dashboard (React)
 
 ```bash
 cd TaskB_Fleet_Dashboard
+cp ../TaskA_Compliance_Engine/output/compliance_results.json public/
 npm install
 npm start
 ```
+
+**Access:** http://localhost:3000
 
 ### Task C: Technical Memo
 
@@ -69,111 +45,83 @@ See `TaskC_Technical_Memo/MindX_Technical_Memo.pdf`
 
 ---
 
-## 📊 Task A: Compliance Engine
+## ML Model Performance Summary
 
-### Overview
-Machine learning system that predicts CO2 emissions and calculates vessel compliance with 2026 GHG intensity regulations.
+**Algorithm:** Linear Regression with OneHotEncoding  
+**Dataset:** 1,440 vessel operations (Nigerian maritime fleet)  
+**Features:** Ship type (categorical), distance, fuel consumption  
+**Target:** CO2 emissions (kg)
 
-### Key Features
-- Linear Regression model for CO2 prediction
-- GHG intensity calculation per vessel
-- Regulatory benchmark computation (95% of fleet average)
-- Compliance balance classification (Surplus/Deficit)
+### Performance Metrics
 
-### Assumptions
-- GHG Intensity Formula: `CO2 Emission (Kg) / Distance (km)`
-- 2026 Target: `Fleet Average Intensity × 0.95`
-- Compliance Balance: `Target Intensity - Vessel Intensity`
+| Metric | Train | Test | Status |
+|--------|-------|------|--------|
+| **RMSE** | 1,006 kg | 1,010 kg | ✅ Excellent |
+| **MAE** | 618 kg | 625 kg | ✅ Excellent |
+| **R²** | 0.9943 | **0.9951** | ✅ Outstanding |
 
-### ML Performance Metrics
-*Will be updated after model training*
+**Key Insight:** Model explains 99.51% of variance in CO2 emissions. Fuel consumption coefficient ~2.73 kg CO2/L (physically accurate).
 
----
+### Fleet Compliance Results
 
-## 🎨 Task B: Fleet Arbitrage Dashboard
+| Status | Count | % | Balance |
+|--------|-------|---|---------|
+| Surplus | 617 | 42.8% | +13,358 kg/km |
+| Deficit | 823 | 57.2% | -19,036 kg/km |
+| **Net** | 1,440 | 100% | **-5,677 kg/km** |
 
-### Overview
-Interactive React-based dashboard for visualizing fleet compliance and simulating pooling strategies.
-
-### Features
-1. **Fleet Overview**: Total vessels, surplus count, deficit count
-2. **Liability Map**: Color-coded vessel compliance status
-3. **Pooling Simulator**: Interactive tool to offset deficits with surplus vessels
-
-### Pooling Logic
-```
-Net Balance = CB_surplus + CB_deficit
-
-If Net Balance ≥ 0: Compliance achieved
-If Net Balance < 0: Remaining deficit shown
-```
+**Target:** 74.91 kg/km (5% reduction from fleet average of 78.85 kg/km)
 
 ---
 
-## 📝 Task C: Technical Memo
+## Task Summaries
 
-Deep analysis of one dataset anomaly with:
-- Statistical anomaly detection
-- Physical maritime engineering explanation
-- Compliance impact assessment
-- Actionable recommendations
+### Task A: Compliance Engine
+- **Input:** CSV dataset (1,440 records)
+- **Process:** ML prediction → GHG calculation → Compliance classification
+- **Output:** JSON with vessel-level compliance metrics
+- **Key Files:** `model.py`, `compliance.py`, `run_pipeline.py`
 
----
+### Task B: Fleet Dashboard
+- **Technology:** React 18 with responsive CSS
+- **Features:** Fleet overview, liability map (filterable/sortable), pooling simulator
+- **Pooling Logic:** `Net = Surplus + Deficit` (deterministic)
+- **Key Files:** `App.js`, `FleetOverview.js`, `LiabilityMap.js`, `PoolingSimulator.js`
 
-## 🔧 Technologies Used
-
-**Task A:**
-- Python 3.x
-- pandas, numpy
-- scikit-learn
-- jupyter
-
-**Task B:**
-- React 18+
-- Modern CSS (responsive design)
-- Chart.js / D3.js (for visualizations)
+### Task C: Technical Memo
+- **Anomaly:** Vessel NG077 (23.8% excess fuel consumption)
+- **Root Cause:** Hull biofouling (marine growth)
+- **Physics:** Hydrodynamic resistance equation validates 24% fuel increase
+- **Recommendation:** Hull cleaning (ROI: 2-3 months)
 
 ---
 
-## 📖 Key Assumptions
+## Key Assumptions
 
-1. All calculations use the same unmodified dataset
-2. Distance is measured in kilometers
-3. CO2 emissions are in kilograms
-4. Fuel consumption is in liters
-5. Target year for compliance: 2026
-6. Regulatory reduction target: 5% below fleet average
-
----
-
-## 👨‍💻 Development Notes
-
-- Tasks are implemented independently but may share computed outputs
-- Code prioritizes clarity and explainability
-- All assumptions documented in code comments
-- Deterministic results - no random seeds without documentation
+- Distance: kilometers
+- CO2 emissions: kilograms
+- Fuel consumption: liters
+- GHG Intensity = CO2 / Distance
+- 2026 Target = Fleet Average × 0.95
+- Compliance Balance = Target - Vessel Intensity
 
 ---
 
-## 📦 Deliverables
+## Technologies
 
-- ✅ Complete source code for all three tasks
-- ✅ Generated `compliance_results.json`
-- ✅ Interactive dashboard
-- ✅ Technical memo PDF
-- ✅ Comprehensive documentation
+**Backend:** Python, pandas, numpy, scikit-learn, jupyter  
+**Frontend:** React 18, CSS Grid/Flexbox  
+**Data:** CSV → JSON pipeline
 
 ---
 
-## 🎥 Project Walkthrough
+## Deliverables
 
-*Link to 3-minute video walkthrough will be added here*
-
----
-
-## 📄 License
-
-This project is submitted as part of the MindX AI Intern Technical Assessment.
+✅ Task A: ML model + compliance engine  
+✅ Task B: Interactive React dashboard  
+✅ Task C: Technical memo (PDF)  
+✅ Documentation: README files for each task  
+✅ Output: `compliance_results.json` (ready for dashboard)
 
 ---
 
